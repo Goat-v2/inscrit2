@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulaire</title>
+  <style>
+    form {
+      width: 50%;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: #DDD;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <h1>Formulaire</h1>
+  <form id="monFormulaire">
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom"><br><br>
+    <label for="prenom">Prénom :</label>
+    <input type="text" id="prenom" name="prenom"><br><br>
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="email"><br><br>
+    <label for="telephone">Téléphone :</label>
+    <input type="tel" id="telephone" name="telephone"><br><br>
+    <label for="message">Message :</label>
+    <textarea id="message" name="message"></textarea><br><br>
+    <input type="submit" value="Envoyer">
+  </form>
+  <script>
+    const formulaire = document.getElementById('monFormulaire');
+
+    formulaire.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nom = document.getElementById('nom').value.trim();
+      const prenom = document.getElementById('prenom').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const telephone = document.getElementById('telephone').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (nom && prenom && email && telephone && message) {
+        // Envoyer les données au serveur
+        console.log('Données envoyées');
+      } else {
+        console.log('Veuillez remplir tous les champs');
+      }
+    });
+  </script>
+</body>
+</html>
