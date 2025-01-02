@@ -1,76 +1,348 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Formulaire</title>
-  <style>
-    form {
-      width: 50%;
-      margin: 40px auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    label {
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-    }
-
-    input[type="submit"] {
-      background-color: #4CAF50;
-      color: #fff;
-      padding: 10px 20px;
-      border: #DDD;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #3e8e41;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luka Chatgpt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <h1>Formulaire</h1>
-  <form id="monFormulaire">
-    <label for="nom">Nom :</label>
-    <input type="text" id="nom" name="nom"><br><br>
-    <label for="prenom">Prénom :</label>
-    <input type="text" id="prenom" name="prenom"><br><br>
-    <label for="email">Email :</label>
-    <input type="email" id="email" name="email"><br><br>
-    <label for="telephone">Téléphone :</label>
-    <input type="tel" id="telephone" name="telephone"><br><br>
-    <label for="message">Message :</label>
-    <textarea id="message" name="message"></textarea><br><br>
-    <input type="submit" value="Envoyer">
-  </form>
-  <script>
-    const formulaire = document.getElementById('monFormulaire');
+<body> 
+     <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h2>LUKA-GPT !</h2>
+            <div class="chatbot-actions">
+                </button>
+                <button id="clear-chat" class="icon-btn">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
+        </div>
+        <div class="chatbox">
+            <ul class="chat-list"></ul>
+        </div>
+        <div class="chat-input">
+            <textarea placeholder="Ton message..."></textarea>
+            <span class="material-symbols-outlined send-icon">send</span>
+        </div>
+    </div>
 
-    formulaire.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nom = document.getElementById('nom').value.trim();
-      const prenom = document.getElementById('prenom').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const telephone = document.getElementById('telephone').value.trim();
-      const message = document.getElementById('message').value.trim();
+ <style>
+/* Root Variables for Light and Dark Mode */
+:root {
+    --primary-color-light: #f0f0f0;
+    --primary-color-dark: #2c2c2c;
+    --text-color-light: #333;
+    --text-color-dark: #f0f0f0;
+    --accent-color: hsl(29, 8%, 65%);
+    --bg-color-light: #ffffff;
+    --bg-color-dark: #1c1c1c;
+    --border-color-light: #e0e0e0;
+    --border-color-dark: #444;
+}
 
-      if (nom && prenom && email && telephone && message) {
-        // Envoyer les données au serveur
-        console.log('Données envoyées');
-      } else {
-        console.log('Veuillez remplir tous les champs');
-      }
-    });
-  </script>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffff00;
+    transition: background-color 0.3s ease;
+    font-family: Times;
+}
+
+.chatbot-container {
+    width: 400px;
+    max-width: 92%;
+    margin: 50px auto;
+    background-color: #DDD;
+    border: 1px solid #00f7ff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 0 10px #00f7ff;
+    
+}
+
+.chatbot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #800080;
+    color: white;
+    border: 1px solid #800080;
+}
+
+.chatbot-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-family: Times;
+    color: #000;
+    font-weight: bold;
+    text-indent: 12pt;
+}
+
+.chatbot-actions {
+    display: flex;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    margin-left: 10px;
+    font-size: 24px;
+}
+
+.chatbox {
+    height: 480px;
+    background-color: rgba(6, 6, 21, 0.8);
+    border-top: 2px solid #ffa500;
+    overflow-y: auto;
+    padding: 10px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    font-family: Times;
+}
+
+.chat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chat {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    font-family: Times;
+    color: #fff;
+}
+
+.chat.incoming .material-symbols-outlined {
+    margin-right: 10px;
+    color: var(--accent-color);
+}
+
+.chat p {
+    background-color: #DDD;
+    color: #000;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 70%;
+    word-wrap: break-word;
+    transition: background-color 0.3s ease;
+    font-family: Times;
+}
+
+.chat.outgoing p {
+    background-color: var(--accent-color);
+    color: white;
+    margin-left: auto;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    background-color: #ffa500;
+    border-top: 1px solid #ff500;
+    font-family: Times;
+}
+
+.chat-input textarea {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    resize: none;
+    height: 20px;
+    transition: background-color 0.3s ease;
+    background-color: #00f7ff;
+    font-family: Times;
+}
+
+.chat-input textarea:focus {
+    outline: none;
+    background-color: #00f7ff;
+    font-family: Times;
+}
+
+.send-icon {
+    padding-top: 7px;
+    font-size: 24px;
+    color: #0f0;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Typing animation */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+}
+
+.typing-indicator p {
+    background-color: var(--primary-color-light);
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.typing-indicator .dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    margin: 0 3px;
+    animation: bounce 1s infinite;
+}
+
+.dot:nth-child(1) { animation-delay: 0s; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: var(--primary-color-dark);
+    font-family: Times;
+}
+
+body.dark-mode .chatbot-container {
+    background-color: var(--bg-color-dark);
+    border-color: var(--border-color-dark);
+    font-family: Times;
+}
+
+body.dark-mode .chatbot-header {
+    background-color: var(--primary-color-dark);
+    color: white;
+    font-family: Times;
+}
+
+body.dark-mode .chat p {
+    background-color: var(--primary-color-dark);
+    color: var(--text-color-light);
+}
+
+body.dark-mode .chat.outgoing p {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+body.dark-mode .chat-input {
+    background-color: var(--bg-color-dark);
+}
+
+body.dark-mode .chat-input textarea {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-light);
+}
+</style>
+<script>
+const toggleModeBtn = document.getElementById("toggle-mode");
+const clearChatBtn = document.getElementById("clear-chat");
+const chatList = document.querySelector(".chat-list");
+const chatInput = document.querySelector(".chat-input textarea");
+const sendChatBtn = document.querySelector(".send-icon");
+
+let isDarkMode = false;
+
+// API configuration
+const API_KEY = "AIzaSyAlgCGWEJVof5--FLwewqEkTAsEKSjJDh8"; // met l'api ici
+const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${API_KEY}`;
+
+// Clear chat
+clearChatBtn.addEventListener("click", () => {
+    chatList.innerHTML = "";
+});
+
+// Simulate typing indicator
+const showTypingIndicator = () => {
+    const typingIndicator = document.createElement("li");
+    typingIndicator.classList.add("chat", "incoming", "typing-indicator");
+    typingIndicator.innerHTML = `
+        <span class="material-symbols-outlined">smart_toy</span>
+        <div class="typing">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>`;
+    chatList.appendChild(typingIndicator);
+    chatList.scrollTop = chatList.scrollHeight;
+    return typingIndicator;
+}
+
+// Generate response from API
+const generateResponse = async (userMessage) => {
+    // Define the properties and message for the API request
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+            contents: [{ 
+                role: "user", 
+                parts: [{ text: userMessage }] 
+            }] 
+        }),
+    };
+
+    try {
+        // Send POST request to API, get response and return the message content
+        const response = await fetch(API_URL, requestOptions);
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error.message);
+        return data.candidates[0].content.parts[0].text;
+    } catch (error) {
+        return `Error: ${error.message}`;
+    }
+}
+
+// Send message
+sendChatBtn.addEventListener("click", async () => {
+    const userMessage = chatInput.value.trim();
+    if (userMessage === "") return;
+
+    // Append the user's message to the chat
+    const outgoingChat = document.createElement("li");
+    outgoingChat.classList.add("chat", "outgoing");
+    outgoingChat.innerHTML = `<p>${userMessage}</p>`;
+    chatList.appendChild(outgoingChat);
+    chatInput.value = "";
+    chatList.scrollTop = chatList.scrollHeight;
+
+    // Show typing indicator while waiting for response
+    const typingIndicator = showTypingIndicator();
+
+    // Generate bot response using the API
+    const botMessage = await generateResponse(userMessage);
+
+    // Remove typing indicator and display the bot's response
+    setTimeout(() => {
+        typingIndicator.remove();
+        const incomingChat = document.createElement("li");
+        incomingChat.classList.add("chat", "incoming");
+        incomingChat.innerHTML = `
+            <span class="material-symbols-outlined">smart_toy</span>
+            <p>${botMessage}</p>`;
+        chatList.appendChild(incomingChat);
+        chatList.scrollTop = chatList.scrollHeight;
+    }, 200);  // You can adjust the delay time as needed
+});
+
+</script>    
 </body>
-</html>
+</html> 
