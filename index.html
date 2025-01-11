@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luka Chatgpt</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luka Chatgpt</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="android-chrome" sizes="512x512" href="https://upanh.cf/s09p7vy0bj.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="hhttps://upanh.cf/s09p7vy0bj.jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.ibb.co/ng8Mk6j/462550180-1114869193582611-8843190837859983048-n-jpg-stp-dst-jpg-p480x480-tt6-nc-cat-103-ccb-1-7-nc.jpg">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="style.css">  
 </head>
 <body> 
+    <div class="abc">BIENVENUE SUR LUKA-GPT 🎉</div>
      <div class="chatbot-container">
         <div class="chatbot-header">
             <h2>LUKA-GPT !</h2>
@@ -27,7 +37,40 @@
         </div>
     </div>
 
+<footer>
+<div class="social-links">
+    <div class="social-link">
+      <a href="https://www.facebook.com/profile.php?id=61555285817885">
+        <i class="fab fa-facebook social-icon"></i>
+      </a>
+    </div>
+    <div class="social-link">
+      <a href="https://wa.me/qr/JQEF4P53E72IJ1">
+        <i class="fab fa-whatsapp social-icon"></i>
+      </a>
+    </div>
+    <div class="social-link">
+      <a href="https://github.com/Gost-bot-v2/Luka-V2-bot">
+        <i class="fab fa-github social-icon"></i>
+      </a>
+    </div>
+  </div>
+</footer>
  <style>
+     footer {
+         background-color: #808080;
+         text-algn: center;
+         padding: 15px;
+     }
+     .abc {
+         background-color: #0f0;
+         color: #000;
+         font-family: Times;
+         text-align: center;
+         padding: 20px;
+         font-weight: bold;
+         text-decoration: uppercase;
+     }
 /* Root Variables for Light and Dark Mode */
 :root {
     --primary-color-light: #f0f0f0;
@@ -80,7 +123,7 @@ body {
     font-family: Times;
     color: #000;
     font-weight: bold;
-    text-indent: 12pt;
+    text-indent: 15pt;
 }
 
 .chatbot-actions {
@@ -251,8 +294,57 @@ body.dark-mode .chat-input textarea {
     background-color: var(--bg-color-dark);
     color: var(--text-color-light);
 }
+.social-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .social-link {
+      margin: 0 10px;
+    }
+    .social-icon {
+      font-size: 2.5rem;
+      border: 2px solid;
+      border-radius: 50%;
+      padding: 10px;
+      animation: colorBorder 5s infinite linear alternate;
+    }
+    .fa-facebook-messenger {
+      color: #1877f2;
+    }
+    .fa-whatsapp {
+      color: #25D366;
+    }
+    .fa-github {
+      color: #333;
+    }
+    @keyframes colorBorder {
+      0% {
+        border-color: #ff79c6;
+      }
+      25% {
+        border-color: #8be9fd;
+      }
+      50% {
+        border-color: #50fa7b;
+      }
+      75% {
+        border-color: #ffb86c;
+      }
+      100% {
+        border-color: #bd93f9;
+      }
+    }
 </style>
-<script>
+<script>  
+    
+const prompts = {
+  scientifique: `Salut à toi moi c'est Luka-Gpt une intelligence artificielle crée par Luka de son vrai nom Sidje Samuel un jeune programmeur web .`,
+  presentation: `Bonjour, je suis un assistant IA conçu par Sidje Samuel , mon principal rôle est de vous aidez dans vos différentes préoccupations !`,
+  fonctionnement: `J'ai été crée par Mr Sidje Samuel pour vous aidez à résoudre tous vos différents problèmes quotidiens .`,
+  createur: `Bonjour je suis un assistant IA crée par Sidje Samuel , un jeune développeur web passionné par l'intelligence artificielle .`
+};
+
 const toggleModeBtn = document.getElementById("toggle-mode");
 const clearChatBtn = document.getElementById("clear-chat");
 const chatList = document.querySelector(".chat-list");
@@ -261,16 +353,13 @@ const sendChatBtn = document.querySelector(".send-icon");
 
 let isDarkMode = false;
 
-// API configuration
-const API_KEY = "AIzaSyAlgCGWEJVof5--FLwewqEkTAsEKSjJDh8"; // met l'api ici
+const API_KEY = "AIzaSyAlgCGWEJVof5--FLwewqEkTAsEKSjJDh8"; 
 const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${API_KEY}`;
 
-// Clear chat
 clearChatBtn.addEventListener("click", () => {
     chatList.innerHTML = "";
 });
 
-// Simulate typing indicator
 const showTypingIndicator = () => {
     const typingIndicator = document.createElement("li");
     typingIndicator.classList.add("chat", "incoming", "typing-indicator");
@@ -286,9 +375,7 @@ const showTypingIndicator = () => {
     return typingIndicator;
 }
 
-// Generate response from API
 const generateResponse = async (userMessage) => {
-    // Define the properties and message for the API request
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -301,7 +388,6 @@ const generateResponse = async (userMessage) => {
     };
 
     try {
-        // Send POST request to API, get response and return the message content
         const response = await fetch(API_URL, requestOptions);
         const data = await response.json();
         if (!response.ok) throw new Error(data.error.message);
@@ -311,38 +397,51 @@ const generateResponse = async (userMessage) => {
     }
 }
 
-// Send message
 sendChatBtn.addEventListener("click", async () => {
-    const userMessage = chatInput.value.trim();
-    if (userMessage === "") return;
+  const userMessage = chatInput.value.trim();
+  if (userMessage === "") return;
 
-    // Append the user's message to the chat
-    const outgoingChat = document.createElement("li");
-    outgoingChat.classList.add("chat", "outgoing");
-    outgoingChat.innerHTML = `<p>${userMessage}</p>`;
-    chatList.appendChild(outgoingChat);
-    chatInput.value = "";
-    chatList.scrollTop = chatList.scrollHeight;
+  const outgoingChat = document.createElement("li");
+  outgoingChat.classList.add("chat", "outgoing");
+  outgoingChat.innerHTML = `<p>${userMessage}</p>`;
+  chatList.appendChild(outgoingChat);
+  chatInput.value = "";
+  chatList.scrollTop = chatList.scrollHeight;
 
-    // Show typing indicator while waiting for response
-    const typingIndicator = showTypingIndicator();
+  const typingIndicator = showTypingIndicator();
 
-    // Generate bot response using the API
-    const botMessage = await generateResponse(userMessage);
-
-    // Remove typing indicator and display the bot's response
+  if (userMessage.toLowerCase().includes("qui t'a crée ?") || userMessage.toLowerCase().includes("qui est ton créateur") || userMessage.toLowerCase().includes("créateur") || userMessage.toLowerCase().includes("Qui t'a créer ") || userMessage.toLowerCase().includes("Qui t'a crée") || userMessage.toLowerCase().includes("Qui t'a créer ?") || userMessage.toLowerCase().includes("Qui est ton créateur ?")) {
+    const botMessage = Object.values(prompts)[Math.floor(Math.random() * Object.values(prompts).length)];
     setTimeout(() => {
-        typingIndicator.remove();
-        const incomingChat = document.createElement("li");
-        incomingChat.classList.add("chat", "incoming");
-        incomingChat.innerHTML = `
-            <span class="material-symbols-outlined">smart_toy</span>
-            <p>${botMessage}</p>`;
-        chatList.appendChild(incomingChat);
-        chatList.scrollTop = chatList.scrollHeight;
-    }, 200);  // You can adjust the delay time as needed
+      typingIndicator.remove();
+      const incomingChat = document.createElement("li");
+      incomingChat.classList.add("chat", "incoming");
+      incomingChat.innerHTML = ` <span class="material-symbols-outlined">smart_toy</span> <p>${botMessage}</p>`;
+      chatList.appendChild(incomingChat);
+      chatList.scrollTop = chatList.scrollHeight;
+    }, 500);
+  } else if (userMessage.toLowerCase().includes("Luka")) {
+    const botMessage = prompts.connaitre;
+    setTimeout(() => {
+      typingIndicator.remove();
+      const incomingChat = document.createElement("li");
+      incomingChat.classList.add("chat", "incoming");
+      incomingChat.innerHTML = ` <span class="material-symbols-outlined">smart_toy</span> <p>${botMessage}</p>`;
+      chatList.appendChild(incomingChat);
+      chatList.scrollTop = chatList.scrollHeight;
+    }, 500);
+  } else {
+    const botMessage = await generateResponse(userMessage);
+    setTimeout(() => {
+      typingIndicator.remove();
+      const incomingChat = document.createElement("li");
+      incomingChat.classList.add("chat", "incoming");
+      incomingChat.innerHTML = ` <span class="material-symbols-outlined">smart_toy</span> <p>${botMessage}</p>`;
+      chatList.appendChild(incomingChat);
+      chatList.scrollTop = chatList.scrollHeight;
+    }, 500);
+  }
 });
-
 </script>    
 </body>
 </html> 
